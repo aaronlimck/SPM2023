@@ -1,3 +1,4 @@
+import { TailwindIndicator } from "@/components/TailwindIndicator";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -15,12 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${inter.className} min-h-screen scroll-smooth antialiased`}
-    >
-      <body className="flex flex-col min-h-screen space-y-6 mb-6">
-        {children}
+    <html lang="en">
+      <body
+        className={`${inter.className} min-h-screen scroll-smooth antialiased`}
+      >
+        <div className="flex flex-col min-h-screen space-y-6">{children}</div>
+        <TailwindIndicator />
       </body>
     </html>
   );
