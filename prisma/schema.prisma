@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Define the Staff table
+model Staff {
+  Staff_ID    Int     @id @default(autoincrement())
+  Staff_FName String  @db.VarChar(50)
+  Staff_LName String  @db.VarChar(50)
+  Dept        String  @db.VarChar(50)
+  Country     String  @db.VarChar(50)
+  Email       String  @db.VarChar(50)
+  
+  // Define a one-to-many relationship with Staff_Skill
+  Staff_Skills Staff_Skill[]
+}
+
+// Define the Role_Skill table
+model Role_Skill {
+  Role_Name  String  @id @db.VarChar(50)
+  Skill_Name String  @db.VarChar(50) @unique
+
+  // Define a one-to-many relationship with Staff_Skill
+  Staff_Skills Staff_Skill[]
+}
+
+// Define the Staff_Skill table
+model Staff_Skill {
+  Staff_ID   Int
+  Skill_Name String  @db.VarChar(50)
+
+    // Define a many-to-one relationship with Staff
+  Staff Staff @relation(fields: [Staff_ID], references: [Staff_ID])
+  
+  // Define a many-to-one relationship with Role_Skill
+  RoleSkill Role_Skill @relation(fields: [Skill_Name], references: [Skill_Name])
+  
+  @@id([Staff_ID, Skill_Name])
+}
+
+
+
+
+
