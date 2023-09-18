@@ -9,3 +9,14 @@
 .safeMargin {
   padding: 0 1rem /* 16px */;
 }
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --muted: 210 17% 98%;
+    --primary: 218 11% 15%;
+    --secondary: 217 10% 25%;
+    --accent: 240 5% 96%;
+    --destructive: 0 84% 60%;
+  }
+}
