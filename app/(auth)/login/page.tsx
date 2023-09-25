@@ -97,12 +97,11 @@ export default function Login() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="fixed w-full top-0 bg-slate-100 text-center p-2">
-        <p className="text-sm">
-          This is a mockup login of{" "}
-          <span>Internal Skill-Based Role Portal</span>.
+        <p className="full max-w-2xl mx-auto text-sm px-6 py-2">
+          This is a mockup login of Internal Skill-Based Role Portal.
           <br />
-          To access your account, simply log in with the{" "}
-          <span className="font-medium underline">credentials provided</span>.
+          This prototype is designed for educational purposes and is not
+          intended for real-world use.
         </p>
       </div>
       <div className="flex flex-col justify-center items-center dvh safeMargin">
