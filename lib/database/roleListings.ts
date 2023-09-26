@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import { skip } from "node:test";
 
 export async function getAllRoleListings(
   pageNumber = 1,
@@ -33,20 +32,6 @@ export async function getAllRoleListings(
   }
 }
 
-export const getSpecificRoleListing = async (Role_Name: string) => {
-  try {
-    const role = await prisma.role.findUnique({
-      where: {
-        Role_Name: Role_Name,
-      },
-    });
-    return role;
-  } catch (error) {
-    console.error("Error fetching role listing:", error);
-    throw error;
-  }
-};
-
 export const getAllActiveRoleListings = async (
   pageNumber = 1,
   pageLimit = 10,
@@ -70,6 +55,20 @@ export const getAllActiveRoleListings = async (
     return roles;
   } catch (error) {
     console.error("Error fetching role listings:", error);
+    throw error;
+  }
+};
+
+export const getSpecificRoleListing = async (Role_Name: string) => {
+  try {
+    const role = await prisma.role.findUnique({
+      where: {
+        Role_Name: Role_Name,
+      },
+    });
+    return role;
+  } catch (error) {
+    console.error("Error fetching role listing:", error);
     throw error;
   }
 };
