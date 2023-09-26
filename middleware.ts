@@ -16,11 +16,10 @@ export default withAuth(
     // }
 
     if (
-      // request.nextUrl.pathname.match("/staff-directory") ||
-      // (request.nextUrl.pathname.match("/role-management") &&
+      (request.nextUrl.pathname.match("/staff-directory") ||
+        request.nextUrl.pathname.match("/role-management")) &&
       request.nextauth.token?.role === "STAFF"
     ) {
-      // )
       return NextResponse.rewrite(new URL("/denied", request.url));
     }
   },
@@ -32,5 +31,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/staff-directory", "/role-management"],
+  matcher: ["/staff-directory", "/role-management", "/roles"],
 };
