@@ -7,6 +7,7 @@ export async function getAllStaffDirectory(
 ) {
   try {
     const skip = (pageNumber - 1) * pageLimit;
+
     const staffs = await prisma.staff.findMany({
       orderBy: [
         {
@@ -16,10 +17,20 @@ export async function getAllStaffDirectory(
       skip: skip,
       take: pageLimit,
       where: {
-        Staff_FName: {
-          contains: searchStaffQuery,
-          mode: "insensitive",
-        },
+        OR: [
+          {
+            Staff_FName: {
+              contains: searchStaffQuery,
+              mode: "insensitive",
+            },
+          },
+          {
+            Staff_LName: {
+              contains: searchStaffQuery,
+              mode: "insensitive",
+            },
+          },
+        ],
       },
     });
     return staffs;
