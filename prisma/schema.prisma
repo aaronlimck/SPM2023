@@ -31,10 +31,12 @@ model Staff {
 model Role {
   Role_Name  String     @db.VarChar(50) @id
   Role_Desc  String
-  Role_ExpiryDate DateTime  
-  createdDate DateTime
-  updatedDate DateTime
+  // Role_ExpiryDate DateTime  
+  // createdDate DateTime
+  // updatedDate DateTime
+
   roleSkills Role_Skill[] // Add a reference to Role_Skill
+  roleListings Role_Listing[] // Add a reference to Role_Listing
 }
 
 model Role_Skill {
@@ -45,6 +47,16 @@ model Role_Skill {
 
   // Define a one-to-many relationship with Staff_Skill
   Staff_Skills Staff_Skill[]
+}
+
+model Role_Listing{
+  Role_ID Int @id @default(autoincrement())
+  Role_Name String @db.VarChar(50)
+  Role_ExpiryDate DateTime
+  createdDate DateTime @default(now())
+  updatedDate DateTime @updatedAt
+
+  Role Role @relation(fields: [Role_Name], references: [Role_Name])
 }
 
 model Staff_Skill {
