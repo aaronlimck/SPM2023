@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { ReactNode } from "react";
 
 export default function Button({
+  type = "button",
   text,
   variant = "primary",
   className,
@@ -13,6 +14,7 @@ export default function Button({
   loading,
   icon,
 }: {
+  type: "button" | "submit";
   text: string;
   variant?: "primary" | "secondary" | "outline" | "ghost";
   className?: string;
@@ -24,7 +26,7 @@ export default function Button({
   return (
     <button
       // if onClick is passed, it's a "button" type, otherwise it's being used in a form, hence "submit"
-      type={onClick ? "button" : "submit"}
+      type={type}
       className={cn(
         "flex h-10 w-full items-center justify-center space-x-2 rounded-md border px-4 text-sm transition-all focus:outline-none",
         disabled || loading
