@@ -1,4 +1,5 @@
 import { authConfig } from "@/lib/auth";
+import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import {
@@ -9,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "../ui/Dropdown";
 import Logout from "./Logout";
-import SwitchPortal from "./SwitchPortal";
 
 export default async function NavBar() {
   const session = await getServerSession(authConfig);
@@ -18,9 +18,11 @@ export default async function NavBar() {
     return null;
   }
 
+  // @ts-ignore
   const userName = session?.user.name;
   const initials = userName ? userName.substring(0, 1).toUpperCase() : "";
   const role = session?.user.role;
+  // @ts-ignore
   const userEmail = session?.user.email;
 
   return (
@@ -28,10 +30,33 @@ export default async function NavBar() {
       className={`sticky top-0 inset-x-0 z-50 w-full bg-white mx-auto max-w-[1440px] safeMargin border-b border-gray-100`}
     >
       <div className="flex h-16 items-center justify-between space-x-3 md:space-x-0">
-        <div className="flex items-center">
+        <div className="flex gap-6 md:gap-10 items-center">
           <a className="font-bold text-lg" href="/">
             <img className="w-8 h-auto" src="../logoIcon.png" alt="" />
           </a>
+
+          {role === "HR" ? (
+            <nav className="hidden gap-6 md:flex">
+              <Link
+                className="flex items-center text-lg font-medium transition-colors hover:text-primary/80 sm:text-sm text-primary/60"
+                href={DEFAULT_REDIRECTS.staffDirectory}
+              >
+                Staff Directory
+              </Link>
+              <Link
+                className="flex items-center text-lg font-medium transition-colors hover:text-primary/80 sm:text-sm text-primary/60"
+                href={DEFAULT_REDIRECTS.roleManagement}
+              >
+                Role Listings Management
+              </Link>
+              <Link
+                className="flex items-center text-lg font-medium transition-colors hover:text-primary/80 sm:text-sm text-primary/60"
+                href={DEFAULT_REDIRECTS.roleListing}
+              >
+                Role Listings
+              </Link>
+            </nav>
+          ) : null}
         </div>
 
         <div className="flex items-center space-x-3">
@@ -50,15 +75,11 @@ export default async function NavBar() {
                 <span>{userEmail}</span>
               </div>
               <DropdownMenuSeparator className="bg-gray-100" />
-              {role === "HR" ? (
-                <DropdownMenuItem>
-                  <SwitchPortal userType={role} />
-                </DropdownMenuItem>
-              ) : (
-                ""
-              )}
               <DropdownMenuItem>
-                <Link href="#" className="text-primary font-medium ">
+                <Link
+                  href={DEFAULT_REDIRECTS.applications}
+                  className="text-primary font-medium "
+                >
                   My Applications
                 </Link>
               </DropdownMenuItem>
