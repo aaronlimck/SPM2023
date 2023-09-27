@@ -39,3 +39,32 @@ export async function getAllStaffDirectory(
     throw error;
   }
 }
+
+export const getSpecificStaffByName = async (Staff_FullName: string) => {
+  const [firstName, lastName] = decodeURIComponent(Staff_FullName).split("-"); // decodeURIComponent to decode the URL
+
+  try {
+    const staff = await prisma.staff.findFirst({
+      where: {
+        AND: [
+          {
+            Staff_FName: {
+              contains: firstName,
+              mode: "insensitive",
+            },
+          },
+          {
+            Staff_LName: {
+              contains: lastName,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+    });
+    return staff;
+  } catch (error) {
+    console.error("Error fetching staff:", error);
+    throw error;
+  }
+};
