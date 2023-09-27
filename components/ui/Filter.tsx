@@ -20,21 +20,25 @@ export default function Filter({
   children?: React.ReactNode;
 }) {
   return (
-    <Sheet>
-      <SheetTrigger className="focus:outline-none">
-        <div className="border rounded-lg flex flex-row items-center cursor-pointer text-base sm:text-sm text-gray-500 hover:text-gray-800 py-2 px-3">
-          <ListFilterIcon className="w-4 h-4 mr-1" />
-          <p>Filter</p>
-        </div>
-      </SheetTrigger>
+    <div className="border rounded-lg flex flex-row items-center cursor-pointer text-base sm:text-sm text-gray-500 hover:text-gray-800 py-2 px-3">
+      <ListFilterIcon className="w-4 h-4 mr-1" />
+      <p>Filter</p>
+    </div>
+    // <Sheet>
+    //   <SheetTrigger className="focus:outline-none">
+    //     <div className="border rounded-lg flex flex-row items-center cursor-pointer text-base sm:text-sm text-gray-500 hover:text-gray-800 py-2 px-3">
+    //       <ListFilterIcon className="w-4 h-4 mr-1" />
+    //       <p>Filter</p>
+    //     </div>
+    //   </SheetTrigger>
 
-      <SheetContent className="w-[400px] sm:w-[540px]">
-        <SheetHeader>
-          <SheetTitle>{sheetTitle}</SheetTitle>
-          <SheetDescription>{sheetDesc}</SheetDescription>
-          {children}
-        </SheetHeader>
-      </SheetContent>
-    </Sheet>
+    //   <SheetContent className="w-[400px] sm:w-[540px]">
+    //     <SheetHeader>
+    //       <SheetTitle>{sheetTitle}</SheetTitle>
+    //       <SheetDescription>{sheetDesc}</SheetDescription>
+    //       {children}
+    //     </SheetHeader>
+    //   </SheetContent>
+    // </Sheet>
   );
 }
