@@ -8,7 +8,7 @@ export async function getAllRoleListings(
   try {
     const skip = (pageNumber - 1) * pageLimit;
 
-    const roles = await prisma.role.findMany({
+    const roles = await prisma.role_Listing.findMany({
       orderBy: [
         {
           Role_Name: "asc",
@@ -35,24 +35,40 @@ export async function getAllRoleListings(
 export const getAllActiveRoleListings = async (
   pageNumber = 1,
   pageLimit = 10,
-  searchRoleQuery: string
+  searchRoleQuery = ""
 ) => {
   try {
     const skip = (pageNumber - 1) * pageLimit;
     const currentDate = new Date();
 
-    const roles = await prisma.role.findMany({
+    const roles = await prisma.role_Listing.findMany({
       where: {
         Role_ExpiryDate: {
-          gte: currentDate, // Filter out roles with expiry dates greater than or equal to the current date
+          gte: currentDate,
+        },
+        Role_Name: {
+          contains: searchRoleQuery,
+          mode: "insensitive",
         },
       },
       orderBy: {
-        createdDate: "asc", // Sort by createdAt in descending order
+        createdDate: "asc",
+      },
+      include: {
+        Role: {
+          select: {
+            Role_Desc: true,
+          },
+        },
       },
     });
 
-    return roles;
+    const roleListingsWithDescriptions = roles.map((roleListing) => ({
+      ...roleListing,
+      Role_Desc: roleListing.Role?.Role_Desc || "",
+    }));
+
+    return roleListingsWithDescriptions;
   } catch (error) {
     console.error("Error fetching role listings:", error);
     throw error;
@@ -61,7 +77,7 @@ export const getAllActiveRoleListings = async (
 
 export const getSpecificRoleListing = async (Role_Name: string) => {
   try {
-    const role = await prisma.role.findUnique({
+    const role = await prisma.role_Listing.findFirst({
       where: {
         Role_Name: Role_Name,
       },
