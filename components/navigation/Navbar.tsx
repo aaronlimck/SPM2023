@@ -18,9 +18,11 @@ export default async function NavBar() {
     return null;
   }
 
+  // @ts-ignore
   const userName = session?.user.name;
   const initials = userName ? userName.substring(0, 1).toUpperCase() : "";
   const role = session?.user.role;
+  // @ts-ignore
   const userEmail = session?.user.email;
 
   return (
@@ -45,7 +47,7 @@ export default async function NavBar() {
                 className="flex items-center text-lg font-medium transition-colors hover:text-primary/80 sm:text-sm text-primary/60"
                 href={DEFAULT_REDIRECTS.roleManagement}
               >
-                Role Management
+                Role Listings Management
               </Link>
               <Link
                 className="flex items-center text-lg font-medium transition-colors hover:text-primary/80 sm:text-sm text-primary/60"

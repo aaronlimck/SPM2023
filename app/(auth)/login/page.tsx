@@ -157,6 +157,7 @@ export default function Login() {
               </div>
             </div>
             <Button
+              type="submit"
               loading={formData.isLoading}
               className="w-full h-11"
               text="Login"

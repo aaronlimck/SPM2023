@@ -18,8 +18,14 @@ const Search = ({
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!query) return router.push(callback);
-    router.push(`${callback}?search=${query}`);
+    const trimmedQuery = query?.trim(); // Remove leading and trailing whitespace
+
+    if (!trimmedQuery) {
+      setQuery("");
+      return router.push(callback);
+    }
+
+    router.push(`${callback}?search=${encodeURIComponent(trimmedQuery)}`);
   };
 
   // Capture CMD + K to focus on search bar
