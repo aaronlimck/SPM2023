@@ -22,27 +22,28 @@ model Staff {
   Email       String @db.VarChar(50)
   Access_Rights    Int
 
+  // Define Access_Right in Staff as Foreign Key to ID in Access_Type
   Access_Type  Access_Type @relation(fields: [Access_Rights], references: [id])
 
   // Define a one-to-many relationship with Staff_Skill
   Staff_Skills Staff_Skill[]
+
+  Role_Listing_Application Role_Listing_Application[]
 }
 
 model Role {
   Role_Name  String     @db.VarChar(50) @id
   Role_Desc  String
-  // Role_ExpiryDate DateTime  
-  // createdDate DateTime
-  // updatedDate DateTime
 
-  roleSkills Role_Skill[] // Add a reference to Role_Skill
-  roleListings Role_Listing[] // Add a reference to Role_Listing
+  roleSkills Role_Skill[] // 1 to many Role_Skills
+  roleListings Role_Listing[] // 1 to many Role_Listings
 }
 
 model Role_Skill {
   Role_Name  String     @db.VarChar(50)
   Skill_Name String     @db.VarChar(50) @id
 
+  // Define Role_Name as Foreign Key to Role_Name in Role
   Role       Role       @relation(fields: [Role_Name], references: [Role_Name])
 
   // Define a one-to-many relationship with Staff_Skill
@@ -50,13 +51,29 @@ model Role_Skill {
 }
 
 model Role_Listing{
-  Role_ID Int @id @default(autoincrement())
-  Role_Name String @db.VarChar(50)
+  Role_Listing_ID Int @id @default(autoincrement())
+  Role_Listing_Name String @db.VarChar(50)
+  Role_Listing_Desc String 
+  
+  Role_Name String @db.VarChar(50) 
   Role_ExpiryDate DateTime
-  createdDate DateTime @default(now())
-  updatedDate DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   Role Role @relation(fields: [Role_Name], references: [Role_Name])
+
+  Role_Listing_Application Role_Listing_Application[]
+}
+
+model Role_Listing_Application{
+  Role_Listing_Application_Id Int @id @default(autoincrement())
+  Role_Listing_Id Int 
+  Staff_ID Int 
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  Role_Listing Role_Listing @relation(fields: [Role_Listing_Id], references: [Role_Listing_ID])
+  Staff Staff @relation(fields: [Staff_ID], references: [Staff_ID])
 }
 
 model Staff_Skill {
