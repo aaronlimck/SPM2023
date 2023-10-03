@@ -72,9 +72,13 @@ export default function JobListingHRTwo({
               }}
             >
               <span className="flex items-center px-2">
-                Role
+                Role Listing Name
                 <ChevronsUpDown className="w-4 h-4 ml-1 text-gray-400" />
               </span>
+            </th>
+
+            <th scope="col" className="px-6 py-3">
+              <span className="flex flex-row items-center">Role</span>
             </th>
 
             <th
@@ -132,6 +136,10 @@ export default function JobListingHRTwo({
                   >
                     {job.Role_Listing_Name}
                   </Link>
+                </td>
+
+                <td className="text-center px-6 py-3 ">
+                  <span className="flex flexx-row">{job.Role_Name}</span>
                 </td>
 
                 <td className="text-center px-6 py-3 ">
