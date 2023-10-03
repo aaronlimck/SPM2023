@@ -1,4 +1,6 @@
 "use client";
+import CustomLink from "@/components/ui/CustomLink";
+import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { formatDate, isDateInPast } from "@/lib/utils";
 import { ChevronsUpDown } from "lucide-react";
 import Link from "next/link";
@@ -117,8 +119,16 @@ export default function JobListingHRTwo({
 
         <tbody>
           {sortedJobs.length === 0 ? (
-            <tr className="bg-green-100 w-full">
-              <td className="text-center py-4">No jobs found.</td>
+            <tr className="w-full">
+              <td colSpan={99} className="w-full text-center py-4">
+                No records found.
+                <CustomLink
+                  variant="primary"
+                  className=" text-white mx-auto mt-2"
+                  href={DEFAULT_REDIRECTS.roleManagement}
+                  text="Clear filters"
+                />
+              </td>
             </tr>
           ) : (
             sortedJobs.map((job, index) => (
@@ -173,14 +183,14 @@ export default function JobListingHRTwo({
         </tbody>
       </table>
 
-      {
+      {sortedJobs.length > 0 && (
         <p className="text-sm text-gray-500 mb-3">
           Showing{" "}
           <span className="text-primary font-medium">{sortedJobs.length}</span>{" "}
           of{" "}
           <span className="text-primary font-medium">{sortedJobs.length}</span>
         </p>
-      }
+      )}
     </div>
   );
 }
