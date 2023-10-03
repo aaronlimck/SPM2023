@@ -49,3 +49,15 @@ export function formatDate(dateStr: string): string {
 
   return `${day}/${month}/${year}`;
 }
+
+export const getMinDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1; // Months are 0-indexed
+  const day = today.getDate();
+
+  // Format the date as "YYYY-MM-DD"
+  return `${year}-${month < 10 ? "0" + month : month}-${
+    day < 10 ? "0" + day : day
+  }`;
+};
