@@ -22,14 +22,14 @@ export const authConfig: NextAuthOptions = {
         // Docs: https://next-auth.js.org/configuration/providers/credentials
         const users = [
           {
-            id: "01",
+            id: "1",
             email: "hr@example.com",
             name: "Human Resource",
             password: "Password888",
             role: "HR",
           },
           {
-            id: "02",
+            id: "2",
             email: "staff@example.com",
             name: "Staff",
             password: "Password888",
