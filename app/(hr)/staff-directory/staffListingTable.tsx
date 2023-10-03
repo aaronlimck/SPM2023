@@ -45,7 +45,7 @@ export default function StaffListingTable({
   });
 
   return (
-    <>
+    <div className="hidden md:flex md:flex-col space-y-4">
       <table className="w-full text-sm text-left text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-accent">
           <tr>
@@ -134,6 +134,6 @@ export default function StaffListingTable({
           <span className="text-primary font-medium">{sortedStaff.length}</span>
         </p>
       )}
-    </>
+    </div>
   );
 }
