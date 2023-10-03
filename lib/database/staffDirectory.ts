@@ -68,3 +68,23 @@ export const getSpecificStaffByName = async (Staff_FullName: string) => {
     throw error;
   }
 };
+
+export const getSpecificStaffSkillsByID = async (Staff_ID: number) => {
+  try {
+    const staffSkills = await prisma.staff_Skill.findMany({
+      where: {
+        Staff_ID: Staff_ID,
+      },
+    });
+
+    const formattedSkills = staffSkills.map((skill) => skill.Skill_Name);
+
+    return {
+      Staff_ID: Staff_ID,
+      Staff_Skills: formattedSkills,
+    };
+  } catch (error) {
+    console.error("Error fetching staff skills:", error);
+    throw error;
+  }
+};
