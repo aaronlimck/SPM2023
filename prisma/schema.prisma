@@ -54,7 +54,6 @@ model Role_Listing{
   Role_Listing_ID Int @id @default(autoincrement())
   Role_Listing_Name String @db.VarChar(50)
   Role_Listing_Desc String 
-  
   Role_Name String @db.VarChar(50) 
   Role_ExpiryDate DateTime
   createdAt DateTime @default(now())
