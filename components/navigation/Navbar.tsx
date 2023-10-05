@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/Dropdown";
 import Logout from "./Logout";
+import { LogoToggle } from "./LogoToggle";
 
 export default async function NavBar() {
   const session = await getServerSession(authConfig);
@@ -30,10 +31,11 @@ export default async function NavBar() {
       className={`sticky top-0 inset-x-0 z-50 w-full bg-white mx-auto max-w-[1440px] safeMargin border-b border-gray-100`}
     >
       <div className="flex h-16 items-center justify-between space-x-3 md:space-x-0">
-        <div className="flex gap-6 md:gap-10 items-center">
-          <a className="font-bold text-lg" href="/">
+        <div className="flex gap-6 md:gap-8 items-center">
+          {/* <a className="font-bold text-lg" href="/">
             <img className="w-8 h-auto" src="../logoIcon.png" alt="" />
-          </a>
+          </a> */}
+          <LogoToggle />
 
           {role === "HR" ? (
             <nav className="hidden gap-6 md:flex">
