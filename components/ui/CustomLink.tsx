@@ -12,7 +12,7 @@ export default function CustomLink({
 }: {
   href: string;
   variant?: "primary" | "secondary" | "outline" | "ghost";
-  text: string;
+  text?: string;
   className?: string;
   icon?: ReactNode;
 }) {
