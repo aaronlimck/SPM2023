@@ -10,33 +10,27 @@ interface roleListingsDetailsFormProps {
   Role_Listing_Name: string;
   Role_Listing_Desc: string;
   Role_Name: string;
-  Role_Desc: string;
+  Role_Desc?: string;
   Role_ExpiryDate: Date;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export default function RoleListingsDetailsForm({
-  className,
   data,
 }: {
-  className?: string;
   data: roleListingsDetailsFormProps;
 }) {
-  console.log(data);
   return (
-    <div
-      role="roleDetails"
-      className={`hidden lg:flex lg:flex-col lg:col-span-2 border border-gray-200 rounded-lg space-y-4 p-4 w-full h-fit ${className}`}
-    >
+    <div className="space-y-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
         <div>
           <Link
-            className="flex flex-row items-center"
+            className="flex flex-row items-center group"
             target="_blank"
             href={`${DEFAULT_REDIRECTS.roleListing}/${data?.Role_Listing_ID}`}
           >
-            <h2 className="text-xl font-semibold hover:underline">
+            <h2 className="text-xl font-semibold group-hover:underline">
               {data?.Role_Listing_Name}
             </h2>
             <ExternalLinkIcon className="text-primary w-4 h-4 ml-2" />
@@ -80,7 +74,7 @@ export default function RoleListingsDetailsForm({
 
       <div className="space-y-1">
         <h3 className="text-sm font-medium">Job Description</h3>
-        <p className="text-sm text-primary">{data?.Role_Listing_Desc}</p>
+        <p className="text-primary">{data?.Role_Listing_Desc}</p>
       </div>
     </div>
   );
