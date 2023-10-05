@@ -1,18 +1,20 @@
 "use client";
-
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 export default function CustomLink({
   href,
   variant = "ghost",
   text,
   className,
+  icon,
 }: {
   href: string;
   variant?: "primary" | "secondary" | "outline" | "ghost";
   text: string;
   className?: string;
+  icon?: ReactNode;
 }) {
   return (
     <Link
@@ -32,6 +34,7 @@ export default function CustomLink({
         className
       )}
     >
+      {icon}
       {text}
     </Link>
   );
