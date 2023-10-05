@@ -1,4 +1,5 @@
 import Button from "@/components/ui/Button";
+import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { isLessThanDayAgo } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { ExternalLinkIcon } from "lucide-react";
@@ -33,7 +34,7 @@ export default function RoleListingsDetailsForm({
           <Link
             className="flex flex-row items-center"
             target="_blank"
-            href={`${data?.Role_Listing_ID}`}
+            href={`${DEFAULT_REDIRECTS.roleListing}/${data?.Role_Listing_ID}`}
           >
             <h2 className="text-xl font-semibold hover:underline">
               {data?.Role_Listing_Name}
