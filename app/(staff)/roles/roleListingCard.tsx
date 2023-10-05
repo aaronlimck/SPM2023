@@ -1,3 +1,4 @@
+import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import { isLessThanDayAgo } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
@@ -31,7 +32,7 @@ export default function RoleListingCard({
     if (deviceType !== "tablet") onClick(roleId);
 
     if (deviceType === "tablet" || deviceType === "mobile")
-      router.push(`roleTwo/${roleId}`);
+      router.push(`${DEFAULT_REDIRECTS.roleListing}/${roleId}`);
   };
 
   return (

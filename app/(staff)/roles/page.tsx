@@ -1,11 +1,7 @@
-import Button from "@/components/ui/Button";
 import Filter from "@/components/ui/Filter";
 import Search from "@/components/ui/Search";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { getAllActiveRoleListings } from "@/lib/database/roleListings";
-import { DividerVerticalIcon } from "@radix-ui/react-icons";
-import RoleListingCard from "./roleListingCard";
-import { ExternalLinkIcon } from "lucide-react";
 import RoleListingWrapper from "./roleListingWrapper";
 
 const RoleListingsPage = async ({
@@ -21,7 +17,6 @@ const RoleListingsPage = async ({
     typeof searchParams.search === "string" ? searchParams.search : "";
 
   const data = await getAllActiveRoleListings(page, limit, search);
-  const firstItem = data[0];
 
   return (
     <>
