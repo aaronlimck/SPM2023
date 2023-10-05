@@ -17,7 +17,7 @@ const SpecificRoleDetailsPage = async ({
   if (!data) {
     return notFound();
   }
-  console.log(data);
+
   return (
     <div className="w-full max-w-5xl mx-auto">
       <RoleListingsDetailsForm data={data} />
