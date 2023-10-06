@@ -1,9 +1,12 @@
+"use client";
 import Button from "@/components/ui/Button";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { isLessThanDayAgo } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { ExternalLinkIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { Toaster, toast } from "sonner";
 
 interface roleListingsDetailsFormProps {
   Role_Listing_ID: number;
@@ -21,6 +24,42 @@ export default function RoleListingsDetailsForm({
 }: {
   data: roleListingsDetailsFormProps;
 }) {
+  const apiUrl = "http://localhost:3000/api/createRoleApplication";
+
+  const postData = {
+    Role_Listing_Id: data?.Role_Listing_ID,
+    Staff_ID: 1,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  const handleSubmit = () => {
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Check for success in the response and show toast only if successful
+        if (data && data.success) {
+          toast.success("Application submitted successfully");
+        }
+      })
+      .catch((error) => {
+        console.error("Error during POST request:", error);
+        // Optionally, show an error toast
+        toast.error("Error submitting application");
+      });
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
@@ -69,13 +108,19 @@ export default function RoleListingsDetailsForm({
             </div>
           </div>
         </div>
-        <Button variant="primary" type="button" text="Apply" />
+        <Button
+          variant="primary"
+          type="button"
+          text="Apply"
+          onClick={handleSubmit}
+        />
       </div>
 
       <div className="space-y-1">
         <h3 className="text-sm font-medium">Job Description</h3>
         <p className="text-primary">{data?.Role_Listing_Desc}</p>
       </div>
+      <Toaster position="top-right" />
     </div>
   );
 }

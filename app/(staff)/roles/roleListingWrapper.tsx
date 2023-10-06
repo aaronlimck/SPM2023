@@ -2,7 +2,7 @@
 import CustomLink from "@/components/ui/CustomLink";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import RoleListingCard from "./roleListingCard";
 import RoleListingsDetailsForm from "./roleListingsDetailsForm";
 
