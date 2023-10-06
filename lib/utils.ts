@@ -61,3 +61,38 @@ export const getMinDate = () => {
     day < 10 ? "0" + day : day
   }`;
 };
+
+export const formatDateDifference = (date: Date): string => {
+  const currentDate = new Date();
+  const targetDate = date;
+  const timeDifference = currentDate.getTime() - targetDate.getTime();
+  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  if (daysDifference <= 7) {
+    if (daysDifference === 0) {
+      // Less than 24 hours
+      const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
+      if (hoursDifference === 0) {
+        const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+        return `${minutesDifference} minutes ago`;
+      }
+      return `${hoursDifference} hours ago`;
+    } else if (daysDifference === 1) {
+      return "1 day ago";
+    } else {
+      return `${daysDifference} days ago`;
+    }
+  } else {
+    // Show actual date in dd mm yyyy format
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      timeZone: "UTC",
+    };
+    return targetDate.toLocaleDateString("en-US", options);
+  }
+};
