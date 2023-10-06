@@ -52,7 +52,7 @@ export const getAllActiveRoleListings = async (
         },
       },
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
       include: {
         Role: {
