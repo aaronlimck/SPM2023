@@ -5,5 +5,5 @@ interface Staff {
   Dept: string;
   Email: string;
   Access_Rights: number;
-  Staff_Skills: string[] | undefined;
+  Staff_Skills?: string[] | undefined;
 }
