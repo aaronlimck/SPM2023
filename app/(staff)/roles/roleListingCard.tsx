@@ -1,6 +1,6 @@
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import { isLessThanDayAgo } from "@/lib/utils";
+import { formatDateDifference, isLessThanDayAgo } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 
@@ -62,7 +62,7 @@ export default function RoleListingCard({
             </div>
             <DividerVerticalIcon className="text-gray-500 w-4 h-4" />
             <div role="meta-item" className="text-xs text-gray-500">
-              Posted 6 days ago
+              Posted {formatDateDifference(roleCreatedAt)}
             </div>
             <DividerVerticalIcon className="text-gray-500 w-4 h-4" />
             <div

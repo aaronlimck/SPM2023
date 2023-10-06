@@ -1,11 +1,12 @@
 "use client";
 import Button from "@/components/ui/Button";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
-import { isLessThanDayAgo } from "@/lib/utils";
+import { formatDateDifference, isLessThanDayAgo } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { ExternalLinkIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { format } from "path";
 import { Toaster, toast } from "sonner";
 
 interface roleListingsDetailsFormProps {
@@ -86,7 +87,7 @@ export default function RoleListingsDetailsForm({
               role="meta-item"
               className="text-sm text-gray-500 tracking-tight"
             >
-              Posted 6 days ago
+              Posted {formatDateDifference(data?.createdAt)}
             </div>
             <DividerVerticalIcon className="text-gray-500 w-4 h-4" />
             <div
