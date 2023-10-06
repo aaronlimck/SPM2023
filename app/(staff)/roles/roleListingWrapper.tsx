@@ -58,7 +58,7 @@ export default function RoleListingWrapper({
           </div>
           <div
             role="roleDetails"
-            className={`hidden lg:flex lg:flex-col lg:col-span-2 border border-gray-200 rounded-lg space-y-4 p-4 w-full h-fit`}
+            className={`sticky top-20 hidden lg:flex lg:flex-col lg:col-span-2 border border-gray-200 rounded-lg space-y-4 p-4 w-full h-fit`}
           >
             {/* @ts-ignore */}
             <RoleListingsDetailsForm data={selectedItem} />

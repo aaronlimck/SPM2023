@@ -4,9 +4,7 @@ import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { formatDateDifference, isLessThanDayAgo } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { ExternalLinkIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { format } from "path";
 import { Toaster, toast } from "sonner";
 
 interface roleListingsDetailsFormProps {
