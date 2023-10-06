@@ -61,8 +61,29 @@ export const getSpecificStaffByName = async (Staff_FullName: string) => {
           },
         ],
       },
+      include: {
+        Staff_Skills: {
+          select: {
+            Skill_Name: true,
+          },
+        },
+      },
     });
-    return staff;
+
+    const formattedSkills = staff?.Staff_Skills.map(
+      (skill) => skill.Skill_Name
+    );
+    const formattedStaff = {
+      Staff_ID: staff!.Staff_ID,
+      Staff_FName: staff!.Staff_FName,
+      Staff_LName: staff!.Staff_LName,
+      Dept: staff!.Dept,
+      Email: staff!.Email,
+      Access_Rights: staff!.Access_Rights,
+      Staff_Skills: formattedSkills,
+    };
+
+    return formattedStaff;
   } catch (error) {
     console.error("Error fetching staff:", error);
     throw error;
