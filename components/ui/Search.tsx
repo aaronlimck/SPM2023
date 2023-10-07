@@ -44,7 +44,7 @@ const Search = ({
   }, []);
 
   return (
-    <div className={cn("relative w-full")}>
+    <div className={cn("relative w-full -z-50")}>
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
         <SearchIcon className="w-4 h-4 mr-1" aria-hidden="true" />
       </div>

@@ -28,7 +28,7 @@ export default async function NavBar() {
 
   return (
     <header
-      className={`sticky top-0 inset-x-0 z-50 w-full bg-white mx-auto max-w-[1440px] safeMargin border-b border-gray-100`}
+      className={`sticky top-0 inset-x-0 z-1 w-full bg-white mx-auto max-w-[1440px] safeMargin border-b border-gray-100`}
     >
       <div className="flex h-16 items-center justify-between space-x-3 md:space-x-0">
         <div className="flex gap-6 md:gap-8 items-center">
