@@ -20,8 +20,10 @@ interface roleListingsDetailsFormProps {
 
 export default function RoleListingsDetailsForm({
   data,
+  direct,
 }: {
   data: roleListingsDetailsFormProps;
+  direct?: boolean;
 }) {
   const apiUrl = "http://localhost:3000/api/createRoleApplication";
 
@@ -63,16 +65,23 @@ export default function RoleListingsDetailsForm({
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
         <div>
-          <Link
-            className="flex flex-row items-center group"
-            target="_blank"
-            href={`${DEFAULT_REDIRECTS.roleListing}/${data?.Role_Listing_ID}`}
-          >
+          {direct ? (
             <h2 className="text-xl font-semibold group-hover:underline">
               {data?.Role_Listing_Name}
             </h2>
-            <ExternalLinkIcon className="text-primary w-4 h-4 ml-2" />
-          </Link>
+          ) : (
+            <Link
+              className="flex flex-row items-center group"
+              target="_blank"
+              href={`${DEFAULT_REDIRECTS.roleListing}/${data?.Role_Listing_ID}`}
+            >
+              <h2 className="text-xl font-semibold group-hover:underline">
+                {data?.Role_Listing_Name}
+              </h2>
+              <ExternalLinkIcon className="text-primary w-4 h-4 ml-2" />
+            </Link>
+          )}
+
           <div role="meta-list" className="flex flex-row items-center">
             <div
               role="meta-item"
