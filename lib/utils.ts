@@ -50,18 +50,6 @@ export function formatDate(dateStr: string): string {
   return `${day}/${month}/${year}`;
 }
 
-export const getMinDate = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1; // Months are 0-indexed
-  const day = today.getDate();
-
-  // Format the date as "YYYY-MM-DD"
-  return `${year}-${month < 10 ? "0" + month : month}-${
-    day < 10 ? "0" + day : day
-  }`;
-};
-
 export const formatDateDifference = (date: Date): string => {
   const currentDate = new Date();
   const targetDate = date;
@@ -96,3 +84,24 @@ export const formatDateDifference = (date: Date): string => {
     return targetDate.toLocaleDateString("en-US", options);
   }
 };
+
+export function dateToDateTime(dateString: string): Date | null {
+  const [year, month, day] = dateString.split("-").map(Number);
+
+  // Check if the date components are valid numbers
+  if (isNaN(year) || isNaN(month) || isNaN(day)) {
+    console.error("Invalid date components");
+    return null;
+  }
+
+  // JavaScript months are 0-indexed, so subtract 1 from the month
+  const dateObject = new Date(year, month - 1, day);
+
+  // Check if the Date object is valid
+  if (isNaN(dateObject.getTime())) {
+    console.error("Invalid date");
+    return null;
+  }
+
+  return dateObject;
+}
