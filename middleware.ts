@@ -36,6 +36,7 @@ export const config = {
     "/role-management",
     "/role-management/:path*",
     "/roles",
+    "/roles/:path*",
     "/applications",
   ],
 };
