@@ -1,5 +1,4 @@
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
-import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import { formatDateDifference, isLessThanDayAgo } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
@@ -9,6 +8,8 @@ interface roleListingCardProps {
   roleTitle: string;
   roleDescription: string;
   roleName: string;
+  roleDesc: string;
+  roleSkills: string[];
   roleExpiredOn: Date;
   roleCreatedAt: Date;
   onClick: (roleId: number) => void;
@@ -26,7 +27,6 @@ export default function RoleListingCard({
   deviceType,
 }: roleListingCardProps) {
   const router = useRouter();
-
   const handleClick = () => {
     // Call the function passed from the parent with the roleId parameter
     if (deviceType !== "tablet") onClick(roleId);
