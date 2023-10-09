@@ -105,3 +105,23 @@ export function dateToDateTime(dateString: string): Date | null {
 
   return dateObject;
 }
+
+export function dateTimeToDate(dateObject: Date): string {
+  // Check if the Date object is valid
+  if (isNaN(dateObject.getTime())) {
+    console.error("Invalid date object");
+    return "";
+  }
+
+  // Get year, month, and day from the Date object
+  const year = dateObject.getFullYear();
+  const month = dateObject.getMonth() + 1; // Adding 1 because months are 0-indexed
+  const day = dateObject.getDate();
+
+  // Format the date string as "YYYY-MM-DD"
+  const dateString = `${year}-${month.toString().padStart(2, "0")}-${day
+    .toString()
+    .padStart(2, "0")}`;
+
+  return dateString;
+}
