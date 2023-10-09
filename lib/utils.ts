@@ -40,10 +40,88 @@ export function isLessThanDayAgo(dateTime: Date) {
   return timeDifference < millisecondsInDay;
 }
 
-export function formatDate(date: Date): string {
+export function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+
   const day: string = String(date.getDate()).padStart(2, "0");
   const month: string = String(date.getMonth() + 1).padStart(2, "0");
   const year: string = String(date.getFullYear());
 
   return `${day}/${month}/${year}`;
+}
+
+export const formatDateDifference = (date: Date): string => {
+  const currentDate = new Date();
+  const targetDate = date;
+  const timeDifference = currentDate.getTime() - targetDate.getTime();
+  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  if (daysDifference <= 7) {
+    if (daysDifference === 0) {
+      // Less than 24 hours
+      const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
+      if (hoursDifference === 0) {
+        const minutesDifference = Math.floor(timeDifference / (1000 * 60));
+        return `${minutesDifference} minutes ago`;
+      }
+      return `${hoursDifference} hours ago`;
+    } else if (daysDifference === 1) {
+      return "1 day ago";
+    } else {
+      return `${daysDifference} days ago`;
+    }
+  } else {
+    // Show actual date in dd mm yyyy format
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      timeZone: "UTC",
+    };
+    return targetDate.toLocaleDateString("en-US", options);
+  }
+};
+
+export function dateToDateTime(dateString: string): Date | null {
+  const [year, month, day] = dateString.split("-").map(Number);
+
+  // Check if the date components are valid numbers
+  if (isNaN(year) || isNaN(month) || isNaN(day)) {
+    console.error("Invalid date components");
+    return null;
+  }
+
+  // JavaScript months are 0-indexed, so subtract 1 from the month
+  const dateObject = new Date(year, month - 1, day);
+
+  // Check if the Date object is valid
+  if (isNaN(dateObject.getTime())) {
+    console.error("Invalid date");
+    return null;
+  }
+
+  return dateObject;
+}
+
+export function dateTimeToDate(dateObject: Date): string {
+  // Check if the Date object is valid
+  if (isNaN(dateObject.getTime())) {
+    console.error("Invalid date object");
+    return "";
+  }
+
+  // Get year, month, and day from the Date object
+  const year = dateObject.getFullYear();
+  const month = dateObject.getMonth() + 1; // Adding 1 because months are 0-indexed
+  const day = dateObject.getDate();
+
+  // Format the date string as "YYYY-MM-DD"
+  const dateString = `${year}-${month.toString().padStart(2, "0")}-${day
+    .toString()
+    .padStart(2, "0")}`;
+
+  return dateString;
 }

@@ -11,13 +11,13 @@ export async function getAllRoleListings(
     const roles = await prisma.role_Listing.findMany({
       orderBy: [
         {
-          Role_Name: "asc",
+          Role_Listing_Name: "asc",
         },
       ],
       skip: skip,
       take: pageLimit,
       where: {
-        Role_Name: {
+        Role_Listing_Name: {
           contains: searchRoleQuery, // Use 'contains' to perform a partial match
           mode: "insensitive", // Case-insensitive search
         },
@@ -46,13 +46,13 @@ export const getAllActiveRoleListings = async (
         Role_ExpiryDate: {
           gte: currentDate,
         },
-        Role_Name: {
+        Role_Listing_Name: {
           contains: searchRoleQuery,
           mode: "insensitive",
         },
       },
       orderBy: {
-        createdDate: "asc",
+        createdAt: "desc",
       },
       include: {
         Role: {
@@ -75,11 +75,11 @@ export const getAllActiveRoleListings = async (
   }
 };
 
-export const getSpecificRoleListing = async (Role_Name: string) => {
+export const getSpecificRoleListing = async (Role_Listing_ID: number) => {
   try {
     const role = await prisma.role_Listing.findFirst({
       where: {
-        Role_Name: Role_Name,
+        Role_Listing_ID: Role_Listing_ID,
       },
     });
     return role;
@@ -88,3 +88,16 @@ export const getSpecificRoleListing = async (Role_Name: string) => {
     throw error;
   }
 };
+
+// export const createRoleListing = async (Role_Details: object) => {
+//   try {
+//     const newRoleListing = await prisma.role_Listing.create({
+//       data: {
+//         ...Role_Details,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Error creating role listing:", error);
+//     throw error;
+//   }
+// };

@@ -1,6 +1,5 @@
-import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
+import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import { DEFAULT_REDIRECTS } from "./lib/constants";
 
 export default withAuth(
   function middleware(request: NextRequestWithAuth) {
@@ -16,8 +15,8 @@ export default withAuth(
     // }
 
     if (
-      (request.nextUrl.pathname.match("/staff-directory") ||
-        request.nextUrl.pathname.match("/role-management")) &&
+      (request.nextUrl.pathname.startsWith("/staff-directory") ||
+        request.nextUrl.pathname.startsWith("/role-management")) &&
       request.nextauth.token?.role === "STAFF"
     ) {
       return NextResponse.rewrite(new URL("/denied", request.url));
@@ -31,5 +30,13 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/staff-directory", "/role-management", "/roles"],
+  matcher: [
+    "/staff-directory",
+    "/staff-directory/:path*",
+    "/role-management",
+    "/role-management/:path*",
+    "/roles",
+    "/roles/:path*",
+    "/applications",
+  ],
 };
