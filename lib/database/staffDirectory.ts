@@ -73,6 +73,7 @@ export const getSpecificStaffByName = async (Staff_FullName: string) => {
     const formattedSkills = staff?.Staff_Skills.map(
       (skill) => skill.Skill_Name
     );
+
     const formattedStaff = {
       Staff_ID: staff!.Staff_ID,
       Staff_FName: staff!.Staff_FName,
