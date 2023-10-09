@@ -4,6 +4,7 @@ import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { formatDateDifference, isLessThanDayAgo } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { ExternalLinkIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Toaster, toast } from "sonner";
 
@@ -25,11 +26,14 @@ export default function RoleListingsDetailsForm({
   data: roleListingsDetailsFormProps;
   direct?: boolean;
 }) {
+  const { data: session } = useSession();
+  const userId = parseInt(session?.user.id!);
+
   const apiUrl = "http://localhost:3000/api/createRoleApplication";
 
   const postData = {
     Role_Listing_Id: data?.Role_Listing_ID,
-    Staff_ID: 1,
+    Staff_ID: userId,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
@@ -128,6 +132,7 @@ export default function RoleListingsDetailsForm({
         <h3 className="text-sm font-medium">Job Description</h3>
         <p className="text-primary">{data?.Role_Listing_Desc}</p>
       </div>
+
       <Toaster position="top-right" />
     </div>
   );
