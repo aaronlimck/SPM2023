@@ -17,7 +17,7 @@ const RoleListingsPage = async ({
     typeof searchParams.search === "string" ? searchParams.search : "";
 
   const data = await getAllActiveRoleListings(page, limit, search);
-
+  console.log(data);
   return (
     <>
       <div className="w-full flex flex-col mb-4 space-y-4">
