@@ -3,7 +3,7 @@ import { getAllRoleApplicationsByRoleListingId } from "@/lib/database/roleApplic
 import { getSpecificRoleListing } from "@/lib/database/roleListings";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { notFound } from "next/navigation";
-import { RoleApplicationsTable } from "./roleApplicationsTable";
+import { RoleApplicationsTable } from "../../../../components/roleListing/roleApplicationsTable";
 
 interface RoleListingsProps {
   roleTitle: string;
