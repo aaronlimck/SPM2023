@@ -1,7 +1,7 @@
 import { getSpecificStaffByName } from "@/lib/database/staffDirectory";
-import PersonalDetailsForm from "./personalDetailsForm";
 import { Info } from "lucide-react";
 import { notFound } from "next/navigation";
+import PersonalDetailsForm from "./personalDetailsForm";
 
 interface StaffPageProps {
   staffName: string;
@@ -10,9 +10,9 @@ interface StaffPageProps {
 const SpecificStaffPage = async ({ params }: { params: StaffPageProps }) => {
   const Staff_FullName = params.staffName;
 
-  const data = await getSpecificStaffByName(Staff_FullName);
+  const staffData = await getSpecificStaffByName(Staff_FullName);
 
-  if (!data) {
+  if (!staffData) {
     return notFound();
   }
 
@@ -35,15 +35,10 @@ const SpecificStaffPage = async ({ params }: { params: StaffPageProps }) => {
 
       <div className="mb-8">
         <p className="text-lg font-medium">Personal Details</p>
-        <PersonalDetailsForm userData={data} />
+        <PersonalDetailsForm userData={staffData} />
       </div>
 
-      <div>
-        <p className="text-lg font-medium mb-3">Applications</p>
-        <div className="border border-gray-200 rounded-lg text-gray-500 text-sm flex justify-center items-center p-6 select-none">
-          No Applications
-        </div>
-      </div>
+      {/* <RoleApplicationsTable applications={[]} /> */}
     </div>
   );
 };
