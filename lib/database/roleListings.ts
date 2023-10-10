@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { Role_Listing } from "@prisma/client";
 
 export async function getAllRoleListings(
   pageNumber = 1,
@@ -58,17 +59,32 @@ export const getAllActiveRoleListings = async (
         Role: {
           select: {
             Role_Desc: true,
+            roleSkills: {
+              select: {
+                // Include the fields you need from the Role_Skill table
+                // For example:
+                Skill_Name: true,
+                // Add other fields as needed
+              },
+            },
           },
         },
       },
     });
 
-    const roleListingsWithDescriptions = roles.map((roleListing) => ({
-      ...roleListing,
-      Role_Desc: roleListing.Role?.Role_Desc || "",
+    const remappedResult = roles.map((role) => ({
+      Role_Listing_ID: role.Role_Listing_ID,
+      Role_Listing_Name: role.Role_Listing_Name,
+      Role_Listing_Desc: role.Role_Listing_Desc,
+      Role_Name: role.Role_Name,
+      Role_Desc: role.Role.Role_Desc,
+      Role_Skills: role.Role.roleSkills.map((skill) => skill.Skill_Name),
+      Role_ExpiryDate: role.Role_ExpiryDate,
+      createdAt: role.createdAt,
+      updatedAt: role.updatedAt,
     }));
 
-    return roleListingsWithDescriptions;
+    return remappedResult;
   } catch (error) {
     console.error("Error fetching role listings:", error);
     throw error;
@@ -89,15 +105,14 @@ export const getSpecificRoleListing = async (Role_Listing_ID: number) => {
   }
 };
 
-// export const createRoleListing = async (Role_Details: object) => {
-//   try {
-//     const newRoleListing = await prisma.role_Listing.create({
-//       data: {
-//         ...Role_Details,
-//       },
-//     });
-//   } catch (error) {
-//     console.error("Error creating role listing:", error);
-//     throw error;
-//   }
-// };
+export const createRoleListing = async (data: Role_Listing) => {
+  try {
+    const newRoleListing = await prisma.role_Listing.create({
+      data,
+    });
+    return newRoleListing;
+  } catch (error) {
+    console.error("Error creating role listing:", error);
+    throw error;
+  }
+};
