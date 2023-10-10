@@ -3,6 +3,7 @@ import { getAllStaffDirectory } from "@/lib/database/staffDirectory";
 import Filter from "@/components/ui/Filter";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import StaffListingTable from "./staffListingTable";
+import StaffLisitingCard from "./staffListingCard";
 
 const StaffDirectoryPage = async ({
   searchParams,
@@ -29,7 +30,7 @@ const StaffDirectoryPage = async ({
         />
         <Filter></Filter>
       </div>
-
+      <StaffLisitingCard className="md:hidden" staffData={data} />
       <StaffListingTable search={search} staffData={data} />
     </div>
   );
