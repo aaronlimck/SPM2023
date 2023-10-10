@@ -4,7 +4,7 @@ interface Job {
   Role_Name: string;
   Role_ExpiryDate: DateTime;
   Role_Listing_Desc: string;
-  //   Role_Skill: string[];
+  Role_Skills: string[];
   createdAt: DateTime;
   updatedAt: DateTime;
 }
