@@ -31,6 +31,29 @@ model Staff {
   Role_Listing_Application Role_Listing_Application[]
 }
 
+model Staff_Skill {
+  Staff_ID Int 
+  Skill_Name String @db.VarChar(50)
+  @@id([Staff_ID, Skill_Name])
+
+  // Define a many-to-one relationship with Staff
+  Staff Staff @relation(fields: [Staff_ID], references: [Staff_ID])
+
+  // // Define a many-to-one relationship with Role_Skill
+  // RoleSkill Role_Skill @relation(fields: [Skill_Name], references: [Skill_Name])
+
+  // Define Skill_Name as Foreign Key to Skill_Name in Skills
+  Skills Skills @relation(fields: [Skill_Name], references: [Skill_Name])
+}
+
+model Skills{
+  Skill_Id Int @id @default(autoincrement())
+  Skill_Name String @db.VarChar(50) @unique
+
+  roleSkills Role_Skill[] // 1 to many Role_Skills
+  staffSkills Staff_Skill[] // 1 to many Staff_Skills
+}
+
 model Role {
   Role_Name  String     @db.VarChar(50) @id
   Role_Desc  String
@@ -41,13 +64,17 @@ model Role {
 
 model Role_Skill {
   Role_Name  String     @db.VarChar(50)
-  Skill_Name String     @db.VarChar(50) @id
+  Skill_Name String     @db.VarChar(50) 
+  @@id([Role_Name, Skill_Name])
 
   // Define Role_Name as Foreign Key to Role_Name in Role
   Role       Role       @relation(fields: [Role_Name], references: [Role_Name])
 
-  // Define a one-to-many relationship with Staff_Skill
-  Staff_Skills Staff_Skill[]
+  // // Define a one-to-many relationship with Staff_Skill
+  // Staff_Skills Staff_Skill[]
+
+  // Define Skill_Name as Foreign Key to Skill_Name in Skills
+  Skills     Skills     @relation(fields: [Skill_Name], references: [Skill_Name])
 }
 
 model Role_Listing{
@@ -75,15 +102,4 @@ model Role_Listing_Application{
   Staff Staff @relation(fields: [Staff_ID], references: [Staff_ID])
 }
 
-model Staff_Skill {
-  Staff_ID Int 
-  Skill_Name String @db.VarChar(50)
-  @@id([Staff_ID, Skill_Name])
-
-  // Define a many-to-one relationship with Staff
-  Staff Staff @relation(fields: [Staff_ID], references: [Staff_ID])
-
-  // Define a many-to-one relationship with Role_Skill
-  RoleSkill Role_Skill @relation(fields: [Skill_Name], references: [Skill_Name])
-}
 
