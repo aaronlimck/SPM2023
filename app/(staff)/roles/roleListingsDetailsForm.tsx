@@ -69,7 +69,6 @@ export default function RoleListingsDetailsForm({
         toast.error("Error submitting application");
       });
   };
-
   return (
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
