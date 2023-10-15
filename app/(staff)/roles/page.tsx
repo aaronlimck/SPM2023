@@ -1,12 +1,13 @@
-import { authConfig } from "@/lib/auth";
-import { getServerSession } from "next-auth";
 import Filter from "@/components/ui/Filter";
 import Search from "@/components/ui/Search";
+import { authConfig } from "@/lib/auth";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { getAllActiveRoleListings } from "@/lib/database/roleListings";
-import RoleListingWrapper from "./roleListingWrapper";
+import { getAllRolesCategoryName } from "@/lib/database/roles";
 import { getSpecificStaffSkillsByID } from "@/lib/database/staffDirectory";
-import { ListFilterIcon } from "lucide-react";
+import { getServerSession } from "next-auth";
+import RoleListingFilterForm from "./roleListingFilterForm";
+import RoleListingWrapper from "./roleListingWrapper";
 
 const RoleListingsPage = async ({
   searchParams,
@@ -19,13 +20,23 @@ const RoleListingsPage = async ({
     typeof searchParams.limit === "string" ? Number(searchParams.limit) : 10;
   const search =
     typeof searchParams.search === "string" ? searchParams.search : "";
+  const roleFilter =
+    typeof searchParams.roles === "string" ? searchParams.roles : "";
+  const sortBy =
+    typeof searchParams.sort === "string" ? searchParams.sort : "latest";
 
   const session = await getServerSession(authConfig);
   const userId = session?.user?.id;
 
-  const data = await getAllActiveRoleListings(page, limit, search);
-  // @ts-ignore
-  const { Staff_Skills } = await getSpecificStaffSkillsByID(parseInt(userId));
+  const data = await getAllActiveRoleListings(
+    page,
+    limit,
+    search,
+    roleFilter,
+    sortBy
+  );
+  const { Staff_Skills } = await getSpecificStaffSkillsByID(parseInt(userId!));
+  const roles = await getAllRolesCategoryName();
 
   return (
     <>
@@ -37,10 +48,10 @@ const RoleListingsPage = async ({
             search={search}
             callback={DEFAULT_REDIRECTS.roleListing}
           />
-          <div className="border rounded-lg flex flex-row items-center cursor-pointer text-base sm:text-sm text-gray-500 hover:text-gray-800 py-2 px-3">
-            <ListFilterIcon className="w-4 h-4 mr-1" />
-            <p>Filter</p>
-          </div>
+
+          <Filter>
+            <RoleListingFilterForm roles={roles} params={searchParams} />
+          </Filter>
         </div>
 
         <RoleListingWrapper jobData={data} staffSkills={Staff_Skills} />

@@ -56,7 +56,9 @@ export async function getAllRoleListings(
 export const getAllActiveRoleListings = async (
   pageNumber = 1,
   pageLimit = 10,
-  searchRoleQuery = ""
+  searchRoleQuery: string,
+  roleFilter: string,
+  sortBy: string
 ) => {
   try {
     const skip = (pageNumber - 1) * pageLimit;
@@ -71,10 +73,16 @@ export const getAllActiveRoleListings = async (
           contains: searchRoleQuery,
           mode: "insensitive",
         },
+        ...(roleFilter && {
+          Role_Name: {
+            in: roleFilter.split("&").map((role) => role.trim()),
+          },
+        }),
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy:
+        sortBy === "latest"
+          ? { createdAt: "desc" }
+          : { Role_Listing_Name: "asc" },
       include: {
         Role: {
           select: {
