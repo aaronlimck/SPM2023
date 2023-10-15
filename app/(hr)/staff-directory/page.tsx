@@ -4,6 +4,7 @@ import Filter from "@/components/ui/Filter";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import StaffListingTable from "./staffListingTable";
 import StaffLisitingCard from "./staffListingCard";
+import { ListFilterIcon } from "lucide-react";
 
 const StaffDirectoryPage = async ({
   searchParams,
@@ -28,7 +29,10 @@ const StaffDirectoryPage = async ({
           search={search}
           callback={DEFAULT_REDIRECTS.staffDirectory}
         />
-        <Filter></Filter>
+        <div className="border rounded-lg flex flex-row items-center cursor-pointer text-base sm:text-sm text-gray-500 hover:text-gray-800 py-2 px-3">
+          <ListFilterIcon className="w-4 h-4 mr-1" />
+          <p>Filter</p>
+        </div>
       </div>
       <StaffLisitingCard className="md:hidden" staffData={data} />
       <StaffListingTable search={search} staffData={data} />

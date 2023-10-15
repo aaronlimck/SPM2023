@@ -12,6 +12,7 @@ import { dateTimeToDate, dateToDateTime } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 type RoleListing = {
   Role_Listing_ID: number;
@@ -40,6 +41,8 @@ function TempForm({
   });
 
   const router = useRouter();
+  const pathname = usePathname();
+  const isUpdate = pathname.includes("/role-management/update");
 
   // Get the current date in 'YYYY-MM-DD' format
   const today = new Date().toISOString().split("T")[0];
@@ -66,6 +69,10 @@ function TempForm({
       Role_ExpiryDate: dateToDateTime(formData.expiryDate),
     };
     createRoleListing(data);
+  };
+
+  const updateListing = () => {
+    alert("update listing");
   };
 
   const createRoleListing = async (data: any) => {
@@ -124,7 +131,7 @@ function TempForm({
                 }
               />
             </SelectTrigger>
-            <SelectContent className="bg-white" align="start">
+            <SelectContent className="bg-white h-[200px]" align="start">
               {availableRoles.map((role) => {
                 return (
                   <SelectItem
@@ -206,9 +213,9 @@ function TempForm({
 
       <Button
         type="submit"
-        text="Create"
+        text={isUpdate ? "Update" : "Create"}
         className="w-full md:w-fit"
-        onClick={handleSubmit}
+        onClick={isUpdate ? updateListing : handleSubmit}
       />
 
       <Toaster position="top-right" />

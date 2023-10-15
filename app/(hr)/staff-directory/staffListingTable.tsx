@@ -108,7 +108,7 @@ export default function StaffListingTable({
 
                 <td data-label="Email" className="md:text-left">
                   <a
-                    className="hover:text-gray-800"
+                    className="hover:text-gray-800 lowercase"
                     href={"mailto:" + staff.Email}
                   >
                     {staff.Email}
