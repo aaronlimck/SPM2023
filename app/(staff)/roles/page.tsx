@@ -1,8 +1,12 @@
+import { authConfig } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 import Filter from "@/components/ui/Filter";
 import Search from "@/components/ui/Search";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { getAllActiveRoleListings } from "@/lib/database/roleListings";
 import RoleListingWrapper from "./roleListingWrapper";
+import { getSpecificStaffSkillsByID } from "@/lib/database/staffDirectory";
+import { ListFilterIcon } from "lucide-react";
 
 const RoleListingsPage = async ({
   searchParams,
@@ -16,8 +20,13 @@ const RoleListingsPage = async ({
   const search =
     typeof searchParams.search === "string" ? searchParams.search : "";
 
+  const session = await getServerSession(authConfig);
+  const userId = session?.user?.id;
+
   const data = await getAllActiveRoleListings(page, limit, search);
-  console.log(data);
+  // @ts-ignore
+  const { Staff_Skills } = await getSpecificStaffSkillsByID(parseInt(userId));
+
   return (
     <>
       <div className="w-full flex flex-col mb-4 space-y-4">
@@ -28,10 +37,13 @@ const RoleListingsPage = async ({
             search={search}
             callback={DEFAULT_REDIRECTS.roleListing}
           />
-          <Filter></Filter>
+          <div className="border rounded-lg flex flex-row items-center cursor-pointer text-base sm:text-sm text-gray-500 hover:text-gray-800 py-2 px-3">
+            <ListFilterIcon className="w-4 h-4 mr-1" />
+            <p>Filter</p>
+          </div>
         </div>
 
-        <RoleListingWrapper jobData={data} />
+        <RoleListingWrapper jobData={data} staffSkills={Staff_Skills} />
       </div>
     </>
   );

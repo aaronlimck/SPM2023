@@ -1,4 +1,5 @@
 "use client";
+import SkillBadge from "@/components/roleListing/SkillsBadge";
 import Button from "@/components/ui/Button";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { formatDateDifference, isLessThanDayAgo } from "@/lib/utils";
@@ -14,6 +15,7 @@ interface roleListingsDetailsFormProps {
   Role_Listing_Desc: string;
   Role_Name: string;
   Role_Desc?: string;
+  Role_Skills?: string[];
   Role_ExpiryDate: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -21,11 +23,14 @@ interface roleListingsDetailsFormProps {
 
 export default function RoleListingsDetailsForm({
   data,
+  staffSkills,
   direct,
 }: {
   data: roleListingsDetailsFormProps;
+  staffSkills?: string[];
   direct?: boolean;
 }) {
+  // GET USER ID
   const { data: session } = useSession();
   const userId = parseInt(session?.user.id!);
 
@@ -120,7 +125,9 @@ export default function RoleListingsDetailsForm({
             </div>
           </div>
         </div>
+
         <Button
+          className="hidden sm:flex"
           variant="primary"
           type="button"
           text="Apply"
@@ -130,8 +137,37 @@ export default function RoleListingsDetailsForm({
 
       <div className="space-y-1">
         <h3 className="text-sm font-medium">Job Description</h3>
-        <p className="text-primary">{data?.Role_Listing_Desc}</p>
+        <p className="text-primary tracking-tight">{data?.Role_Listing_Desc}</p>
       </div>
+
+      {data?.Role_Skills && data?.Role_Skills.length > 0 ? (
+        <div className="space-y-1">
+          <h3 className="text-sm font-medium">Skills</h3>
+          <div className="flex flex-wrap gap-2">
+            {data.Role_Skills.map((skill, index) => {
+              // Check if the skill is in StaffSkill
+              const isSkillInStaffSkill = staffSkills?.includes(skill);
+
+              return (
+                <SkillBadge
+                  key={index}
+                  hasSkill={isSkillInStaffSkill!}
+                  skill={skill}
+                />
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+
+      {/* Display for Mobile */}
+      <Button
+        className="w-full sm:hidden"
+        variant="primary"
+        type="button"
+        text="Apply"
+        onClick={handleSubmit}
+      />
 
       <Toaster position="top-right" />
     </div>
