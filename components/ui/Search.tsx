@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Search = ({
@@ -14,6 +14,8 @@ const Search = ({
   callback: string;
 }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [query, setQuery] = useState(search);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,7 +27,15 @@ const Search = ({
       return router.push(callback);
     }
 
-    router.push(`${callback}?search=${encodeURIComponent(trimmedQuery)}`);
+    if (searchParams.toString()) {
+      router.push(
+        `${callback}?${searchParams.toString()}&search=${encodeURIComponent(
+          trimmedQuery
+        )}`
+      );
+    } else {
+      router.push(`${callback}?search=${encodeURIComponent(trimmedQuery)}`);
+    }
   };
 
   // Capture CMD + K to focus on search bar
@@ -55,6 +65,7 @@ const Search = ({
           type="search"
           autoCapitalize="off"
           autoComplete="off"
+          spellCheck="false"
           className={cn(
             "border block p-2 pl-10 text-base sm:text-sm text-gray-900 placeholder:text-gray-500 rounded-lg w-full bg-white focus:ring-slate-800 focus:border-slate-800 focus:outline-none"
           )}
