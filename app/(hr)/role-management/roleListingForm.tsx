@@ -8,11 +8,12 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
-import { dateTimeToDate, dateToDateTime } from "@/lib/utils";
+import { dateTimeToDate, dateToDateTime, formatDate } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Toaster, toast } from "sonner";
 import { usePathname } from "next/navigation";
+import { format } from "path";
 
 type RoleListing = {
   Role_Listing_ID: number;
@@ -61,7 +62,6 @@ function TempForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const data = {
-      // Role_Listing_ID: 1234,
       Role_Listing_Name: formData.roleName,
       Role_Listing_Desc: formData.roleDescription,
       Role_Name: formData.selectedRole,
@@ -71,8 +71,42 @@ function TempForm({
     createRoleListing(data);
   };
 
-  const updateListing = () => {
-    alert("update listing");
+  const updateListing = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const todayDate = new Date().toISOString().split("T")[0];
+    const data = {
+      Role_Listing_ID: updateRoleListingData?.Role_Listing_ID,
+      Role_Listing_Name: formData?.roleName,
+      Role_Listing_Desc: formData?.roleDescription,
+      Role_Name: formData?.selectedRole,
+      Role_ExpiryDate: dateToDateTime(formData?.expiryDate),
+      createdAt: updateRoleListingData?.createdAt,
+      updatedAt: dateToDateTime(todayDate),
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/updateRoleListing",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const result = await response.json();
+      if (response.status === 200 && result.success) {
+        // Show toast for successful update
+        toast.success("Role listing updated successfully!");
+        router.push(`${DEFAULT_REDIRECTS.roleManagement}`);
+      }
+
+      return result;
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to create role listing. Please try again.");
+    }
   };
 
   const createRoleListing = async (data: any) => {

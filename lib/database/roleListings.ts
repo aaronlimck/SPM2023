@@ -168,3 +168,16 @@ export const createRoleListing = async (data: Role_Listing) => {
     throw error;
   }
 };
+
+export const updateRoleListing = async (id: string, data: Role_Listing) => {
+  try {
+    const updatedRoleListing = await prisma.role_Listing.update({
+      where: { Role_Listing_ID: Number(id) },
+      data,
+    });
+    return updatedRoleListing;
+  } catch (error) {
+    console.error("Error updating role listing:", error);
+    throw error;
+  }
+};
