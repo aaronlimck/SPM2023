@@ -4,6 +4,7 @@ import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+//wk10 responsivenss bug fixed - remind team to check if it is responsive
 interface StaffListingCardProps {
   className?: string;
   staffData: Staff[];
