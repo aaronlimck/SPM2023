@@ -1,7 +1,12 @@
 import Filter from "@/components/ui/Filter";
 import Search from "@/components/ui/Search";
+import { authConfig } from "@/lib/auth";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { getAllActiveRoleListings } from "@/lib/database/roleListings";
+import { getAllRolesCategoryName } from "@/lib/database/roles";
+import { getSpecificStaffSkillsByID } from "@/lib/database/staffDirectory";
+import { getServerSession } from "next-auth";
+import RoleListingFilterForm from "./roleListingFilterForm";
 import RoleListingWrapper from "./roleListingWrapper";
 
 const RoleListingsPage = async ({
@@ -15,8 +20,23 @@ const RoleListingsPage = async ({
     typeof searchParams.limit === "string" ? Number(searchParams.limit) : 10;
   const search =
     typeof searchParams.search === "string" ? searchParams.search : "";
+  const roleFilter =
+    typeof searchParams.roles === "string" ? searchParams.roles : "";
+  const sortBy =
+    typeof searchParams.sort === "string" ? searchParams.sort : "latest";
 
-  const data = await getAllActiveRoleListings(page, limit, search);
+  const session = await getServerSession(authConfig);
+  const userId = session?.user?.id;
+
+  const data = await getAllActiveRoleListings(
+    page,
+    limit,
+    search,
+    roleFilter,
+    sortBy
+  );
+  const { Staff_Skills } = await getSpecificStaffSkillsByID(parseInt(userId!));
+  const roles = await getAllRolesCategoryName();
 
   return (
     <>
@@ -28,10 +48,13 @@ const RoleListingsPage = async ({
             search={search}
             callback={DEFAULT_REDIRECTS.roleListing}
           />
-          <Filter></Filter>
+
+          <Filter>
+            <RoleListingFilterForm roles={roles} params={searchParams} />
+          </Filter>
         </div>
 
-        <RoleListingWrapper jobData={data} />
+        <RoleListingWrapper jobData={data} staffSkills={Staff_Skills} />
       </div>
     </>
   );

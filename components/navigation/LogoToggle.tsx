@@ -1,10 +1,10 @@
 "use client";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/Sheet";
-import useMediaQuery from "@/lib/hooks/useMediaQuery";
 import Link from "next/link";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import { useSession } from "next-auth/react";
+import useMediaQuery from "@/lib/hooks/useMediaQuery";
 
 export function LogoToggle() {
   const { data: session } = useSession();

@@ -148,8 +148,8 @@ export default function JobListingHRTwo({
                   </Link>
                 </td>
 
-                <td className="text-center px-6 py-3 ">
-                  <span className="flex flexx-row">{job.Role_Name}</span>
+                <td className="px-6 py-3 ">
+                  <span className="line-clamp-1">{job.Role_Name}</span>
                 </td>
 
                 <td className="text-center px-6 py-3 ">

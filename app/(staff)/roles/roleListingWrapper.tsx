@@ -2,15 +2,17 @@
 import CustomLink from "@/components/ui/CustomLink";
 import { DEFAULT_REDIRECTS } from "@/lib/constants";
 import useMediaQuery from "@/lib/hooks/useMediaQuery";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import RoleListingCard from "./roleListingCard";
 import RoleListingsDetailsForm from "./roleListingsDetailsForm";
 
 interface RoleListingWrapperProps {
+  staffSkills: string[];
   jobData: Job[];
 }
 
 export default function RoleListingWrapper({
+  staffSkills,
   jobData,
 }: RoleListingWrapperProps) {
   const [selectedItem, setSelectedItem] = useState(
@@ -49,19 +51,24 @@ export default function RoleListingWrapper({
                 roleTitle={item.Role_Listing_Name}
                 roleDescription={item.Role_Listing_Desc}
                 roleName={item.Role_Name}
+                roleSkills={item.Role_Skills}
                 roleExpiredOn={item.Role_ExpiryDate}
                 roleCreatedAt={item.createdAt}
                 onClick={handleCardClick}
                 deviceType={device}
+                staffSkills={staffSkills}
               />
             ))}
           </div>
           <div
             role="roleDetails"
-            className={`hidden lg:flex lg:flex-col lg:col-span-2 border border-gray-200 rounded-lg space-y-4 p-4 w-full h-fit`}
+            className={`sticky top-20 hidden lg:flex lg:flex-col lg:col-span-2 border border-gray-200 rounded-lg space-y-4 p-4 w-full h-fit`}
           >
-            {/* @ts-ignore */}
-            <RoleListingsDetailsForm data={selectedItem} />
+            <RoleListingsDetailsForm
+              // @ts-ignore
+              data={selectedItem}
+              staffSkills={staffSkills}
+            />
           </div>
         </div>
       )}

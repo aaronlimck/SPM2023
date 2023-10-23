@@ -1,8 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 const Search = ({
   placeholder = "Search",
@@ -11,10 +11,21 @@ const Search = ({
 }: {
   placeholder?: string;
   search?: string;
-  callback: string;
+  callback?: string;
 }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [query, setQuery] = useState(search);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,10 +33,16 @@ const Search = ({
 
     if (!trimmedQuery) {
       setQuery("");
-      return router.push(callback);
+      return router.push(callback!);
     }
 
-    router.push(`${callback}?search=${encodeURIComponent(trimmedQuery)}`);
+    if (!searchParams.get("search")) {
+      router.push(`${callback}?search=${encodeURIComponent(trimmedQuery)}`);
+    } else {
+      const updatedQueryString = createQueryString("search", trimmedQuery);
+      const updatedURL = `${callback}?${updatedQueryString}`;
+      router.push(updatedURL);
+    }
   };
 
   // Capture CMD + K to focus on search bar
@@ -55,6 +72,7 @@ const Search = ({
           type="search"
           autoCapitalize="off"
           autoComplete="off"
+          spellCheck="false"
           className={cn(
             "border block p-2 pl-10 text-base sm:text-sm text-gray-900 placeholder:text-gray-500 rounded-lg w-full bg-white focus:ring-slate-800 focus:border-slate-800 focus:outline-none"
           )}
