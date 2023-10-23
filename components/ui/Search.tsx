@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const Search = ({
   placeholder = "Search",
@@ -11,12 +11,21 @@ const Search = ({
 }: {
   placeholder?: string;
   search?: string;
-  callback: string;
+  callback?: string;
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [query, setQuery] = useState(search);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,17 +33,15 @@ const Search = ({
 
     if (!trimmedQuery) {
       setQuery("");
-      return router.push(callback);
+      return router.push(callback!);
     }
 
-    if (searchParams.toString()) {
-      router.push(
-        `${callback}?${searchParams.toString()}&search=${encodeURIComponent(
-          trimmedQuery
-        )}`
-      );
-    } else {
+    if (!searchParams.get("search")) {
       router.push(`${callback}?search=${encodeURIComponent(trimmedQuery)}`);
+    } else {
+      const updatedQueryString = createQueryString("search", trimmedQuery);
+      const updatedURL = `${callback}?${updatedQueryString}`;
+      router.push(updatedURL);
     }
   };
 
