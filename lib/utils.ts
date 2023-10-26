@@ -43,6 +43,11 @@ export function isLessThanDayAgo(dateTime: Date) {
 export function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
 
+  if (isNaN(date.getTime())) {
+    // Handle invalid date strings by returning 'Invalid Date'
+    return "Invalid Date";
+  }
+
   const day: string = String(date.getDate()).padStart(2, "0");
   const month: string = String(date.getMonth() + 1).padStart(2, "0");
   const year: string = String(date.getFullYear());
@@ -54,32 +59,24 @@ export const formatDateDifference = (date: Date): string => {
   const currentDate = new Date();
   const targetDate = date;
   const timeDifference = currentDate.getTime() - targetDate.getTime();
-  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  const minutesDifference = Math.floor(timeDifference / (1000 * 60));
 
-  if (daysDifference <= 7) {
-    if (daysDifference === 0) {
-      // Less than 24 hours
-      const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
-      if (hoursDifference === 0) {
-        const minutesDifference = Math.floor(timeDifference / (1000 * 60));
-        return `${minutesDifference} minutes ago`;
-      }
-      return `${hoursDifference} hours ago`;
-    } else if (daysDifference === 1) {
-      return "1 day ago";
-    } else {
-      return `${daysDifference} days ago`;
-    }
+  if (minutesDifference < 1) {
+    return "Just now";
+  } else if (minutesDifference < 60) {
+    return `${minutesDifference} minute${minutesDifference > 1 ? "s" : ""} ago`;
+  } else if (minutesDifference < 60 * 24) {
+    const hoursDifference = Math.floor(minutesDifference / 60);
+    return `${hoursDifference} hour${hoursDifference > 1 ? "s" : ""} ago`;
+  } else if (minutesDifference < 60 * 24 * 7) {
+    const daysDifference = Math.floor(minutesDifference / (60 * 24));
+    return `${daysDifference} day${daysDifference > 1 ? "s" : ""} ago`;
   } else {
-    // Show actual date in dd mm yyyy format
     const options: Intl.DateTimeFormatOptions = {
       day: "numeric",
-      month: "short",
+      month: "long",
       year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      timeZone: "UTC",
+      timeZone: "Asia/Singapore", // Specify Singapore Time (SGT)
     };
     return targetDate.toLocaleDateString("en-US", options);
   }
