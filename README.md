@@ -18,7 +18,7 @@ The Internal Skill-Based Role Portal prototype is a fictitious concept developed
 1. Clone the Repository:
 
 ```
-git clone https://github.com/aaronlimck/dbea-project.git
+git clone https://github.com/aaronlimck/SPM2023.git
 ```
 
 2. Install Required Dependencies:
