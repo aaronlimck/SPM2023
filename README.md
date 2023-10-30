@@ -52,14 +52,16 @@ By default, the application will run on port 3000.
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 6. Login Credentials:
-   Use the following login credentials to access the application:
-   **Human Resource**
-   Email: hr@example.com
-   Password: Password@888
 
-   **Staff**
-   Email: staff@example.com
-   Password: Password@888
+Use the following login credentials to access the application:
+
+**Human Resource**
+Email: hr@example.com
+Password: Password@888
+
+**Staff**
+Email: staff@example.com
+Password: Password@888
 
 That's it! You've successfully set up the Internal Skill-Based Role Portal App on your local machine. Feel free to explore the application, and if you encounter any issues or have suggestions, please refer to the project documentation or reach out to our development team.
 
