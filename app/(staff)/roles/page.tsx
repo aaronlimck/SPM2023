@@ -17,7 +17,7 @@ const RoleListingsPage = async ({
   const page =
     typeof searchParams.page === "string" ? Number(searchParams.page) : 1;
   const limit =
-    typeof searchParams.limit === "string" ? Number(searchParams.limit) : 10;
+    typeof searchParams.limit === "string" ? Number(searchParams.limit) : 1000;
   const search =
     typeof searchParams.search === "string" ? searchParams.search : "";
   const roleFilter =
