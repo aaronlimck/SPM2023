@@ -77,14 +77,14 @@ export default async function NavBar() {
                 <span>{userEmail}</span>
               </div>
               <DropdownMenuSeparator className="bg-gray-100" />
-              <DropdownMenuItem>
+              {/* <DropdownMenuItem>
                 <Link
                   href={DEFAULT_REDIRECTS.applications}
                   className="text-primary font-medium "
                 >
                   My Applications
                 </Link>
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuItem>
                 <Logout className="w-full items-start justify-start p-0" />
               </DropdownMenuItem>

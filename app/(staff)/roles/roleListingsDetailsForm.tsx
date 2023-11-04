@@ -135,15 +135,13 @@ export default function RoleListingsDetailsForm({
       </div>
 
       <div className="space-y-1">
-        <h3 className="text-sm font-bold">Role Listing Description</h3>
+        <h3 className="text-sm font-medium">Description</h3>
         <p className="text-primary tracking-tight">{data?.Role_Listing_Desc}</p>
       </div>
 
       {data?.Role_Skills && data?.Role_Skills.length > 0 ? (
         <div className="space-y-1">
-          <h3 className="text-sm font-bold">
-            Skills Required for Role Listing
-          </h3>
+          <h3 className="text-sm font-medium">Skills Required</h3>
           <div className="flex flex-wrap gap-2">
             {data.Role_Skills.map((skill, index) => {
               // Check if the skill is in StaffSkill

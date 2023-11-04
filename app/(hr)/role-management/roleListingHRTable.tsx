@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+
 interface JobListingStaffProps {
   className?: string;
   jobData: Job[];
@@ -25,7 +26,7 @@ export default function JobListingHRTwo({
   };
 
   // Sort the jobData based on the selected sorting criteria
-  const sortedJobs = [...jobData].sort((a, b) => {
+  const sortJobs = [...jobData].sort((a, b) => {
     if (sortBy === "createdDate" || sortBy === "expiredDate") {
       const dateA = new Date(
         sortBy === "createdDate" ? a.createdAt : a.Role_ExpiryDate
@@ -118,7 +119,7 @@ export default function JobListingHRTwo({
         </thead>
 
         <tbody>
-          {sortedJobs.length === 0 ? (
+          {sortJobs.length === 0 ? (
             <tr className="w-full">
               <td colSpan={99} className="w-full text-center py-4">
                 No records found.
@@ -131,7 +132,7 @@ export default function JobListingHRTwo({
               </td>
             </tr>
           ) : (
-            sortedJobs.map((job, index) => (
+            sortJobs.map((job, index) => (
               <tr key={index} className={`bg-white border-b`}>
                 <td
                   scope="row"
@@ -183,12 +184,11 @@ export default function JobListingHRTwo({
         </tbody>
       </table>
 
-      {sortedJobs.length > 0 && (
+      {sortJobs.length > 0 && (
         <p className="text-sm text-gray-500 mb-3">
           Showing{" "}
-          <span className="text-primary font-medium">{sortedJobs.length}</span>{" "}
-          of{" "}
-          <span className="text-primary font-medium">{sortedJobs.length}</span>
+          <span className="text-primary font-medium">{sortJobs.length}</span> of{" "}
+          <span className="text-primary font-medium">{sortJobs.length}</span>
         </p>
       )}
     </div>

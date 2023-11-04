@@ -4,6 +4,7 @@ import { isDateInPast } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
+
 interface RoleListingHRCardProps {
   className?: string;
   jobData: Job[];
